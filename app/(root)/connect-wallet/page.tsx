@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, Search, Wallet, Key, HelpCircle, ChevronRight, Shield, ArrowRight } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
+"use client";
+import React, { useState } from "react";
+import {
+  ArrowLeft,
+  Search,
+  Wallet,
+  Key,
+  HelpCircle,
+  ChevronRight,
+  Shield,
+  ArrowRight,
+} from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-type Step = 'intro' | 'select' | 'connect';
-type ConnectionMethod = 'seed' | 'private-key' | 'forgot';
+type Step = "intro" | "select" | "connect";
+type ConnectionMethod = "seed" | "private-key" | "forgot";
 
 interface WalletOption {
   id: string;
@@ -17,52 +27,48 @@ interface WalletOption {
 }
 
 const wallets: WalletOption[] = [
-  { id: 'metamask', name: 'MetaMask', icon: '🦊', popular: true },
-  { id: 'trust', name: 'Trust Wallet', icon: '🛡️', popular: true },
-  { id: 'coinbase', name: 'Coinbase Wallet', icon: '🔵', popular: true },
-  { id: 'phantom', name: 'Phantom', icon: '👻' },
-  { id: 'ledger', name: 'Ledger', icon: '🔐' },
-  { id: 'brave', name: 'Brave Wallet', icon: '🦁' },
-  { id: 'rainbow', name: 'Rainbow', icon: '🌈' },
-  { id: 'argent', name: 'Argent', icon: '⚡' },
-  { id: 'exodus', name: 'Exodus', icon: '🚀' },
-  { id: 'zerion', name: 'Zerion', icon: '🔷' },
+  { id: "metamask", name: "MetaMask", icon: "🦊", popular: true },
+  { id: "trust", name: "Trust Wallet", icon: "🛡️", popular: true },
+  { id: "coinbase", name: "Coinbase Wallet", icon: "🔵", popular: true },
+  { id: "phantom", name: "Phantom", icon: "👻" },
+  { id: "ledger", name: "Ledger", icon: "🔐" },
+  { id: "brave", name: "Brave Wallet", icon: "🦁" },
+  { id: "rainbow", name: "Rainbow", icon: "🌈" },
+  { id: "argent", name: "Argent", icon: "⚡" },
+  { id: "exodus", name: "Exodus", icon: "🚀" },
+  { id: "zerion", name: "Zerion", icon: "🔷" },
 ];
 
 const ConnectWallet: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const [step, setStep] = useState<Step>('intro');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedWallet, setSelectedWallet] = useState<WalletOption | null>(null);
-  const [connectionMethod, setConnectionMethod] = useState<ConnectionMethod>('seed');
-  const [inputValue, setInputValue] = useState('');
+  const [step, setStep] = useState<Step>("intro");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedWallet, setSelectedWallet] = useState<WalletOption | null>(
+    null
+  );
+  const [connectionMethod, setConnectionMethod] =
+    useState<ConnectionMethod>("seed");
+  const [inputValue, setInputValue] = useState("");
 
-  // Redirect if not authenticated
-  React.useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/sign-in');
-    }
-  }, [isAuthenticated, navigate]);
-
-  const filteredWallets = wallets.filter(w => 
+  const filteredWallets = wallets.filter((w) =>
     w.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleWalletSelect = (wallet: WalletOption) => {
     setSelectedWallet(wallet);
-    setStep('connect');
+    setStep("connect");
   };
 
   const handleConnect = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) {
-      toast.error('Please enter your recovery phrase or private key');
+      toast.error("Please enter your recovery phrase or private key");
       return;
     }
     // Demo only - show success
-    toast.success('Wallet connected successfully! (Demo)');
-    navigate('/');
+    toast.success("Wallet connected successfully! (Demo)");
+    router.push("/");
   };
 
   const renderIntro = () => (
@@ -71,9 +77,12 @@ const ConnectWallet: React.FC = () => {
         <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-primary/10 neon-border-blue flex items-center justify-center">
           <Wallet className="w-10 h-10 text-primary" />
         </div>
-        <h1 className="font-orbitron font-bold text-3xl mb-3">Connect Your Wallet</h1>
+        <h1 className="font-orbitron font-bold text-3xl mb-3">
+          Connect Your Wallet
+        </h1>
         <p className="text-muted-foreground max-w-md mx-auto">
-          Link your crypto wallet to start trading, swapping, and managing your digital assets securely.
+          Link your crypto wallet to start trading, swapping, and managing your
+          digital assets securely.
         </p>
       </div>
 
@@ -85,7 +94,8 @@ const ConnectWallet: React.FC = () => {
           <div>
             <h3 className="font-medium mb-1">Non-Custodial</h3>
             <p className="text-sm text-muted-foreground">
-              We never store your private keys. You maintain full control of your assets.
+              We never store your private keys. You maintain full control of
+              your assets.
             </p>
           </div>
         </div>
@@ -102,8 +112,8 @@ const ConnectWallet: React.FC = () => {
         </div>
       </div>
 
-      <Button 
-        onClick={() => setStep('select')}
+      <Button
+        onClick={() => setStep("select")}
         className="w-full btn-primary-glow py-6 gap-2"
       >
         Connect Wallet
@@ -116,7 +126,9 @@ const ConnectWallet: React.FC = () => {
     <div className="animate-fade-up">
       <div className="text-center mb-8">
         <h1 className="font-orbitron font-bold text-2xl mb-2">Select Wallet</h1>
-        <p className="text-muted-foreground">Choose your preferred wallet to connect</p>
+        <p className="text-muted-foreground">
+          Choose your preferred wallet to connect
+        </p>
       </div>
 
       {/* Search */}
@@ -136,16 +148,20 @@ const ConnectWallet: React.FC = () => {
         <div className="mb-4">
           <p className="text-sm text-muted-foreground mb-3">Popular</p>
           <div className="grid grid-cols-3 gap-3">
-            {wallets.filter(w => w.popular).map(wallet => (
-              <button
-                key={wallet.id}
-                onClick={() => handleWalletSelect(wallet)}
-                className="glass-card p-4 flex flex-col items-center gap-2 hover:neon-border-blue transition-all group"
-              >
-                <span className="text-2xl group-hover:scale-110 transition-transform">{wallet.icon}</span>
-                <span className="text-sm font-medium">{wallet.name}</span>
-              </button>
-            ))}
+            {wallets
+              .filter((w) => w.popular)
+              .map((wallet) => (
+                <button
+                  key={wallet.id}
+                  onClick={() => handleWalletSelect(wallet)}
+                  className="glass-card p-4 flex flex-col items-center gap-2 hover:neon-border-blue transition-all group"
+                >
+                  <span className="text-2xl group-hover:scale-110 transition-transform">
+                    {wallet.icon}
+                  </span>
+                  <span className="text-sm font-medium">{wallet.name}</span>
+                </button>
+              ))}
           </div>
         </div>
       )}
@@ -153,28 +169,34 @@ const ConnectWallet: React.FC = () => {
       {/* All Wallets */}
       <div>
         <p className="text-sm text-muted-foreground mb-3">
-          {searchQuery ? 'Results' : 'All Wallets'}
+          {searchQuery ? "Results" : "All Wallets"}
         </p>
         <div className="glass-card overflow-hidden max-h-64 overflow-y-auto">
-          {filteredWallets.map(wallet => (
+          {filteredWallets.map((wallet) => (
             <button
               key={wallet.id}
               onClick={() => handleWalletSelect(wallet)}
               className="w-full flex items-center gap-4 p-4 hover:bg-muted/30 transition-colors border-b border-border/30 last:border-0 group"
             >
-              <span className="text-2xl group-hover:scale-110 transition-transform">{wallet.icon}</span>
-              <span className="font-medium flex-1 text-left">{wallet.name}</span>
+              <span className="text-2xl group-hover:scale-110 transition-transform">
+                {wallet.icon}
+              </span>
+              <span className="font-medium flex-1 text-left">
+                {wallet.name}
+              </span>
               <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
           ))}
           {filteredWallets.length === 0 && (
-            <p className="p-4 text-center text-muted-foreground">No wallets found</p>
+            <p className="p-4 text-center text-muted-foreground">
+              No wallets found
+            </p>
           )}
         </div>
       </div>
 
       <button
-        onClick={() => setStep('intro')}
+        onClick={() => setStep("intro")}
         className="mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mx-auto"
       >
         <ArrowLeft className="w-4 h-4" />
@@ -189,38 +211,42 @@ const ConnectWallet: React.FC = () => {
         <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-muted flex items-center justify-center text-3xl">
           {selectedWallet?.icon}
         </div>
-        <h1 className="font-orbitron font-bold text-2xl mb-2">Connect {selectedWallet?.name}</h1>
-        <p className="text-muted-foreground">Enter your credentials to connect</p>
+        <h1 className="font-orbitron font-bold text-2xl mb-2">
+          Connect {selectedWallet?.name}
+        </h1>
+        <p className="text-muted-foreground">
+          Enter your credentials to connect
+        </p>
       </div>
 
       {/* Connection Method Tabs */}
       <div className="flex rounded-lg bg-muted/50 p-1 mb-6">
         <button
-          onClick={() => setConnectionMethod('seed')}
+          onClick={() => setConnectionMethod("seed")}
           className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all ${
-            connectionMethod === 'seed' 
-              ? 'bg-primary text-primary-foreground' 
-              : 'text-muted-foreground hover:text-foreground'
+            connectionMethod === "seed"
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           Seed Phrase
         </button>
         <button
-          onClick={() => setConnectionMethod('private-key')}
+          onClick={() => setConnectionMethod("private-key")}
           className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all ${
-            connectionMethod === 'private-key' 
-              ? 'bg-primary text-primary-foreground' 
-              : 'text-muted-foreground hover:text-foreground'
+            connectionMethod === "private-key"
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           Private Key
         </button>
         <button
-          onClick={() => setConnectionMethod('forgot')}
+          onClick={() => setConnectionMethod("forgot")}
           className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-all ${
-            connectionMethod === 'forgot' 
-              ? 'bg-primary text-primary-foreground' 
-              : 'text-muted-foreground hover:text-foreground'
+            connectionMethod === "forgot"
+              ? "bg-primary text-primary-foreground"
+              : "text-muted-foreground hover:text-foreground"
           }`}
         >
           <HelpCircle className="w-4 h-4 mx-auto" />
@@ -228,7 +254,7 @@ const ConnectWallet: React.FC = () => {
       </div>
 
       <form onSubmit={handleConnect} className="space-y-6">
-        {connectionMethod === 'seed' && (
+        {connectionMethod === "seed" && (
           <div className="space-y-2">
             <label className="text-sm font-medium">Recovery Phrase</label>
             <textarea
@@ -243,7 +269,7 @@ const ConnectWallet: React.FC = () => {
           </div>
         )}
 
-        {connectionMethod === 'private-key' && (
+        {connectionMethod === "private-key" && (
           <div className="space-y-2">
             <label className="text-sm font-medium">Private Key</label>
             <input
@@ -256,28 +282,28 @@ const ConnectWallet: React.FC = () => {
           </div>
         )}
 
-        {connectionMethod === 'forgot' && (
+        {connectionMethod === "forgot" && (
           <div className="glass-card p-6 text-center">
             <HelpCircle className="w-12 h-12 mx-auto mb-4 text-secondary" />
             <h3 className="font-medium mb-2">Forgot Recovery Phrase?</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              If you've lost your recovery phrase, you'll need to use your wallet's official recovery process.
+              If you've lost your recovery phrase, you'll need to use your
+              wallet's official recovery process.
             </p>
-            <a
-              href="#"
-              className="text-sm text-primary hover:underline"
-            >
+            <a href="#" className="text-sm text-primary hover:underline">
               Learn more about wallet recovery →
             </a>
           </div>
         )}
 
-        {connectionMethod !== 'forgot' && (
+        {connectionMethod !== "forgot" && (
           <>
             <div className="glass-card p-4 flex items-start gap-3 bg-destructive/5 border-destructive/20">
               <Shield className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
               <p className="text-sm text-muted-foreground">
-                <span className="text-destructive font-medium">Demo Mode:</span> This is a UI demonstration. Never enter real recovery phrases or private keys on untrusted websites.
+                <span className="text-destructive font-medium">Demo Mode:</span>{" "}
+                This is a UI demonstration. Never enter real recovery phrases or
+                private keys on untrusted websites.
               </p>
             </div>
 
@@ -290,8 +316,8 @@ const ConnectWallet: React.FC = () => {
 
       <button
         onClick={() => {
-          setStep('select');
-          setInputValue('');
+          setStep("select");
+          setInputValue("");
         }}
         className="mt-6 text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 mx-auto"
       >
@@ -303,11 +329,6 @@ const ConnectWallet: React.FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Connect Wallet - NexusX</title>
-        <meta name="description" content="Connect your crypto wallet to NexusX for secure trading and asset management." />
-      </Helmet>
-
       <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden px-4 py-12">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -316,8 +337,8 @@ const ConnectWallet: React.FC = () => {
         </div>
 
         {/* Back Button */}
-        <Link 
-          to="/"
+        <Link
+          href="/"
           className="absolute top-6 left-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -325,9 +346,9 @@ const ConnectWallet: React.FC = () => {
         </Link>
 
         <div className="w-full max-w-md relative z-10">
-          {step === 'intro' && renderIntro()}
-          {step === 'select' && renderSelect()}
-          {step === 'connect' && renderConnect()}
+          {step === "intro" && renderIntro()}
+          {step === "select" && renderSelect()}
+          {step === "connect" && renderConnect()}
         </div>
       </div>
     </>

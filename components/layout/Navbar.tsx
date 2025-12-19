@@ -1,44 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Wallet, LogOut, ChevronDown } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { Menu, X, Wallet, LogOut, ChevronDown } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const location = useLocation();
+
+  const pathname = usePathname(); // ✅ Next.js route tracker
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ✅ Close menus on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsDropdownOpen(false);
-  }, [location]);
+  }, [pathname]);
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'nav-blur border-b border-border/50' : 'bg-transparent'
+        isScrolled ? "nav-blur border-b border-border/50" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link 
-            to="/" 
-            className="flex items-center gap-2 group"
-          >
+          <Link href="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-primary/20 neon-border-blue flex items-center justify-center group-hover:scale-105 transition-transform">
-              <span className="font-orbitron font-bold text-primary text-sm">NX</span>
+              <span className="font-orbitron font-bold text-primary text-sm">
+                NX
+              </span>
             </div>
             <span className="font-orbitron font-bold text-lg text-foreground hidden sm:block">
               NEXUS<span className="text-primary">X</span>
@@ -49,13 +53,16 @@ const Navbar: React.FC = () => {
           <div className="hidden md:flex items-center gap-6">
             {isAuthenticated ? (
               <>
-                <Link to="/connect-wallet">
-                  <Button variant="outline" className="neon-border-blue hover:bg-primary/10 gap-2">
+                <Link href="/connect-wallet">
+                  <Button
+                    variant="outline"
+                    className="neon-border-blue hover:bg-primary/10 gap-2"
+                  >
                     <Wallet className="w-4 h-4" />
                     Connect Wallet
                   </Button>
                 </Link>
-                
+
                 <div className="relative">
                   <button
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -67,7 +74,11 @@ const Navbar: React.FC = () => {
                       </span>
                     </div>
                     <span className="text-sm font-medium">{user?.name}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        isDropdownOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
 
                   {isDropdownOpen && (
@@ -85,15 +96,16 @@ const Navbar: React.FC = () => {
               </>
             ) : (
               <>
-                <Link to="/sign-in">
-                  <Button variant="ghost" className="hover:text-primary hover:bg-primary/10">
+                <Link href="/auth/sign-in">
+                  <Button
+                    variant="ghost"
+                    className="hover:text-primary hover:bg-primary/10"
+                  >
                     Sign In
                   </Button>
                 </Link>
-                <Link to="/register">
-                  <Button className="btn-primary-glow">
-                    Register
-                  </Button>
+                <Link href="/auth/sign-up">
+                  <Button className="btn-primary-glow">Register</Button>
                 </Link>
               </>
             )}
@@ -104,7 +116,11 @@ const Navbar: React.FC = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-muted/50 transition-colors"
           >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
@@ -123,11 +139,16 @@ const Navbar: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium">{user?.name}</p>
-                    <p className="text-sm text-muted-foreground">{user?.email}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {user?.email}
+                    </p>
                   </div>
                 </div>
-                <Link to="/connect-wallet" className="w-full">
-                  <Button variant="outline" className="w-full neon-border-blue gap-2">
+                <Link href="/connect-wallet" className="w-full">
+                  <Button
+                    variant="outline"
+                    className="w-full neon-border-blue gap-2"
+                  >
                     <Wallet className="w-4 h-4" />
                     Connect Wallet
                   </Button>
@@ -143,15 +164,13 @@ const Navbar: React.FC = () => {
               </>
             ) : (
               <>
-                <Link to="/sign-in" className="w-full">
+                <Link href="/auth/sign-in" className="w-full">
                   <Button variant="ghost" className="w-full">
                     Sign In
                   </Button>
                 </Link>
-                <Link to="/register" className="w-full">
-                  <Button className="w-full btn-primary-glow">
-                    Register
-                  </Button>
+                <Link href="/auth/sign-up" className="w-full">
+                  <Button className="w-full btn-primary-glow">Register</Button>
                 </Link>
               </>
             )}

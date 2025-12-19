@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Github, Twitter, MessageCircle } from 'lucide-react';
+import React from "react";
+import { Github, Twitter, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
@@ -9,9 +9,11 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2 mb-4">
+            <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-primary/20 neon-border-blue flex items-center justify-center">
-                <span className="font-orbitron font-bold text-primary text-sm">NX</span>
+                <span className="font-orbitron font-bold text-primary text-sm">
+                  NX
+                </span>
               </div>
               <span className="font-orbitron font-bold text-lg">
                 NEXUS<span className="text-primary">X</span>
@@ -24,20 +26,31 @@ const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-orbitron font-semibold mb-4 text-sm uppercase tracking-wider">Platform</h4>
+            <h4 className="font-orbitron font-semibold mb-4 text-sm uppercase tracking-wider">
+              Platform
+            </h4>
             <ul className="space-y-2">
               <li>
-                <a href="#swap" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#swap"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   Swap
                 </a>
               </li>
               <li>
-                <a href="#prices" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#prices"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   Prices
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#about"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   About
                 </a>
               </li>
@@ -46,20 +59,31 @@ const Footer: React.FC = () => {
 
           {/* Support */}
           <div>
-            <h4 className="font-orbitron font-semibold mb-4 text-sm uppercase tracking-wider">Support</h4>
+            <h4 className="font-orbitron font-semibold mb-4 text-sm uppercase tracking-wider">
+              Support
+            </h4>
             <ul className="space-y-2">
               <li>
-                <a href="#faq" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#faq"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   FAQ
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   Help Center
                 </a>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                <a
+                  href="#"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
                   Contact
                 </a>
               </li>
@@ -68,7 +92,9 @@ const Footer: React.FC = () => {
 
           {/* Social */}
           <div>
-            <h4 className="font-orbitron font-semibold mb-4 text-sm uppercase tracking-wider">Community</h4>
+            <h4 className="font-orbitron font-semibold mb-4 text-sm uppercase tracking-wider">
+              Community
+            </h4>
             <div className="flex gap-4">
               <a
                 href="#"
@@ -97,10 +123,16 @@ const Footer: React.FC = () => {
             © 2024 NexusX. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <a
+              href="#"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <a
+              href="#"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
               Terms of Service
             </a>
           </div>
