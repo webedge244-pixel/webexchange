@@ -65,7 +65,7 @@ const HeroSection: React.FC = () => {
 
           {/* CTA Buttons */}
           <div
-            className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 transition-all duration-700 delay-300 ${
+            className={`flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 transition-all duration-700 delay-300 ${
               isVisible
                 ? "opacity-100 translate-y-0 scale-100"
                 : "opacity-0 translate-y-10 scale-95"
@@ -92,15 +92,16 @@ const HeroSection: React.FC = () => {
                     <ArrowRight className="w-5 h-5" />
                   </Button>
                 </Link>
-                <Link href="/auth/sign-in">
+                {/* <Link href="/auth/sign-in">
                   <Button
                     size="lg"
-                    variant="outline"
-                    className="text-lg px-8 py-6 neon-border-purple hover:bg-secondary/10"
+                    variant="ghost"
+                    className="text-white/80 text-lg px-8 py-6 neon-border-purple hover:bg-secondary/10"
                   >
                     Sign In
+                    <ArrowRight className="w-5 h-5" />
                   </Button>
-                </Link>
+                </Link> */}
               </>
             )}
           </div>

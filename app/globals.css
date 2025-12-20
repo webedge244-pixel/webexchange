@@ -94,20 +94,17 @@
     --input: 222 30% 12%;
     --ring: 199 89% 48%;
 
-    --radius: 0.75rem;
+    --radius: 0.4rem;
 
     /* Custom tokens */
-    --tech-blue: 199 89% 48%;
-    --tech-purple: 263 70% 50%;
-    --tech-blue-glow: 199 89% 48%;
-    --tech-purple-glow: 263 70% 50%;
+    --tech-blue: 217 91% 60%;
+    --tech-purple: 271 91% 65%;
+    --tech-blue-glow: 217 91% 60%;
+    --tech-purple-glow: 271 91% 65%;
 
     --glass-bg: 222 47% 8% / 0.6;
     --glass-border: 199 89% 48% / 0.2;
     --glass-blur: 20px;
-
-    --neon-blue: 0 0 20px hsl(199 89% 48% / 0.5);
-    --neon-purple: 0 0 20px hsl(263 70% 50% / 0.5);
   }
 
   .dark {
@@ -150,12 +147,11 @@
   }
 
   .glass-card-blue {
-    @apply relative overflow-hidden rounded-xl;
+    @apply relative overflow-hidden rounded-md;
       background: hsl(var(--glass-bg));
       backdrop-filter: blur(var(--glass-blur));
       -webkit-backdrop-filter: blur(var(--glass-blur));
       border: 1px solid hsl(var(--glass-border));
-    box-shadow: var(--neon-blue);
     border-color: hsl(var(--tech-blue) / 0.3);
   }
 
@@ -165,18 +161,15 @@
       backdrop-filter: blur(var(--glass-blur));
       -webkit-backdrop-filter: blur(var(--glass-blur));
       border: 1px solid hsl(var(--glass-border));
-    box-shadow: var(--neon-purple);
     border-color: hsl(var(--tech-purple) / 0.3);
   }
 
   .neon-border-blue {
     border: 1px solid hsl(var(--tech-blue) / 0.5);
-    box-shadow: inset 0 0 20px hsl(var(--tech-blue) / 0.1), var(--neon-blue);
   }
 
   .neon-border-purple {
     border: 1px solid hsl(var(--tech-purple) / 0.5);
-    box-shadow: inset 0 0 20px hsl(var(--tech-purple) / 0.1), var(--neon-purple);
   }
 
   .text-glow-blue {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowDownUp, RefreshCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import React, { useState, useEffect } from "react";
+import { ArrowDownUp, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 interface CryptoOption {
   symbol: string;
@@ -11,24 +11,24 @@ interface CryptoOption {
 }
 
 const cryptoOptions: CryptoOption[] = [
-  { symbol: 'BTC', name: 'Bitcoin', price: 43250.00, icon: '₿' },
-  { symbol: 'ETH', name: 'Ethereum', price: 2280.00, icon: 'Ξ' },
-  { symbol: 'SOL', name: 'Solana', price: 98.50, icon: '◎' },
-  { symbol: 'USDT', name: 'Tether', price: 1.00, icon: '₮' },
-  { symbol: 'BNB', name: 'BNB', price: 312.00, icon: '◆' },
+  { symbol: "BTC", name: "Bitcoin", price: 43250.0, icon: "₿" },
+  { symbol: "ETH", name: "Ethereum", price: 2280.0, icon: "Ξ" },
+  { symbol: "SOL", name: "Solana", price: 98.5, icon: "◎" },
+  { symbol: "USDT", name: "Tether", price: 1.0, icon: "₮" },
+  { symbol: "BNB", name: "BNB", price: 312.0, icon: "◆" },
 ];
 
 const fiatOptions = [
-  { symbol: 'USD', name: 'US Dollar', rate: 1 },
-  { symbol: 'EUR', name: 'Euro', rate: 0.92 },
-  { symbol: 'GBP', name: 'British Pound', rate: 0.79 },
+  { symbol: "USD", name: "US Dollar", rate: 1 },
+  { symbol: "EUR", name: "Euro", rate: 0.92 },
+  { symbol: "GBP", name: "British Pound", rate: 0.79 },
 ];
 
 const CryptoCalculator: React.FC = () => {
   const { ref, isVisible } = useScrollAnimation();
-  const [mode, setMode] = useState<'crypto' | 'fiat'>('crypto');
-  const [fromAmount, setFromAmount] = useState('1');
-  const [toAmount, setToAmount] = useState('');
+  const [mode, setMode] = useState<"crypto" | "fiat">("crypto");
+  const [fromAmount, setFromAmount] = useState("1");
+  const [toAmount, setToAmount] = useState("");
   const [fromCrypto, setFromCrypto] = useState(cryptoOptions[0]);
   const [toCrypto, setToCrypto] = useState(cryptoOptions[1]);
   const [fromFiat, setFromFiat] = useState(fiatOptions[0]);
@@ -40,7 +40,7 @@ const CryptoCalculator: React.FC = () => {
 
   const calculateSwap = () => {
     const amount = parseFloat(fromAmount) || 0;
-    if (mode === 'crypto') {
+    if (mode === "crypto") {
       const result = (amount * fromCrypto.price) / toCrypto.price;
       setToAmount(result.toFixed(6));
     } else {
@@ -52,7 +52,7 @@ const CryptoCalculator: React.FC = () => {
   const handleSwapDirection = () => {
     setIsSwapping(true);
     setTimeout(() => {
-      if (mode === 'crypto') {
+      if (mode === "crypto") {
         const temp = fromCrypto;
         setFromCrypto(toCrypto);
         setToCrypto(temp);
@@ -63,19 +63,19 @@ const CryptoCalculator: React.FC = () => {
 
   return (
     <section id="swap" className="py-20 relative">
-      <div 
-        ref={ref}
-        className="container mx-auto px-4"
-      >
-        <div className="max-w-xl mx-auto">
+      <div ref={ref} className="container mx-auto px-4 ">
+        <div className="max-w-xl mx-auto ">
           {/* Header */}
-          <div 
+          <div
             className={`text-center mb-10 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             <h2 className="font-orbitron font-bold text-3xl md:text-4xl mb-4">
-              Swap <span className="text-primary text-glow-blue">Instantly</span>
+              Swap{" "}
+              <span className="text-primary text-glow-blue">Instantly</span>
             </h2>
             <p className="text-muted-foreground">
               Exchange crypto or buy with your local currency
@@ -83,29 +83,31 @@ const CryptoCalculator: React.FC = () => {
           </div>
 
           {/* Calculator Card */}
-          <div 
+          <div
             className={`glass-card-blue p-6 md:p-8 transition-all duration-700 delay-100 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             {/* Mode Toggle */}
             <div className="flex rounded-lg bg-muted/50 p-1 mb-6">
               <button
-                onClick={() => setMode('crypto')}
+                onClick={() => setMode("crypto")}
                 className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
-                  mode === 'crypto' 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'text-muted-foreground hover:text-foreground'
+                  mode === "crypto"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Crypto → Crypto
               </button>
               <button
-                onClick={() => setMode('fiat')}
+                onClick={() => setMode("fiat")}
                 className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
-                  mode === 'fiat' 
-                    ? 'bg-primary text-primary-foreground' 
-                    : 'text-muted-foreground hover:text-foreground'
+                  mode === "fiat"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Fiat → Crypto
@@ -126,43 +128,48 @@ const CryptoCalculator: React.FC = () => {
                   />
                 </div>
                 <select
-                  value={mode === 'crypto' ? fromCrypto.symbol : fromFiat.symbol}
+                  value={
+                    mode === "crypto" ? fromCrypto.symbol : fromFiat.symbol
+                  }
                   onChange={(e) => {
-                    if (mode === 'crypto') {
-                      const crypto = cryptoOptions.find(c => c.symbol === e.target.value);
+                    if (mode === "crypto") {
+                      const crypto = cryptoOptions.find(
+                        (c) => c.symbol === e.target.value
+                      );
                       if (crypto) setFromCrypto(crypto);
                     } else {
-                      const fiat = fiatOptions.find(f => f.symbol === e.target.value);
+                      const fiat = fiatOptions.find(
+                        (f) => f.symbol === e.target.value
+                      );
                       if (fiat) setFromFiat(fiat);
                     }
                   }}
                   className="bg-muted border border-border rounded-lg px-4 py-3 font-medium input-glow focus:outline-none min-w-[120px]"
                 >
-                  {mode === 'crypto' 
-                    ? cryptoOptions.map(c => (
+                  {mode === "crypto"
+                    ? cryptoOptions.map((c) => (
                         <option key={c.symbol} value={c.symbol}>
                           {c.icon} {c.symbol}
                         </option>
                       ))
-                    : fiatOptions.map(f => (
+                    : fiatOptions.map((f) => (
                         <option key={f.symbol} value={f.symbol}>
                           {f.symbol}
                         </option>
-                      ))
-                  }
+                      ))}
                 </select>
               </div>
             </div>
 
             {/* Swap Button */}
-            {mode === 'crypto' && (
+            {mode === "crypto" && (
               <div className="flex justify-center my-4">
                 <button
                   onClick={handleSwapDirection}
                   className={`p-3 rounded-full glass-card hover:neon-border-blue transition-all ${
-                    isSwapping ? 'rotate-180' : ''
+                    isSwapping ? "rotate-180" : ""
                   }`}
-                  style={{ transition: 'transform 0.3s ease-in-out' }}
+                  style={{ transition: "transform 0.3s ease-in-out" }}
                 >
                   <ArrowDownUp className="w-5 h-5 text-primary" />
                 </button>
@@ -171,7 +178,9 @@ const CryptoCalculator: React.FC = () => {
 
             {/* To Input */}
             <div className="space-y-2 mb-6">
-              <label className="text-sm text-muted-foreground">You Receive</label>
+              <label className="text-sm text-muted-foreground">
+                You Receive
+              </label>
               <div className="flex gap-3">
                 <div className="flex-1 relative">
                   <input
@@ -185,12 +194,14 @@ const CryptoCalculator: React.FC = () => {
                 <select
                   value={toCrypto.symbol}
                   onChange={(e) => {
-                    const crypto = cryptoOptions.find(c => c.symbol === e.target.value);
+                    const crypto = cryptoOptions.find(
+                      (c) => c.symbol === e.target.value
+                    );
                     if (crypto) setToCrypto(crypto);
                   }}
                   className="bg-muted border border-border rounded-lg px-4 py-3 font-medium input-glow focus:outline-none min-w-[120px]"
                 >
-                  {cryptoOptions.map(c => (
+                  {cryptoOptions.map((c) => (
                     <option key={c.symbol} value={c.symbol}>
                       {c.icon} {c.symbol}
                     </option>
@@ -204,11 +215,11 @@ const CryptoCalculator: React.FC = () => {
               <span>Exchange Rate</span>
               <div className="flex items-center gap-2">
                 <span className="font-mono">
-                  1 {mode === 'crypto' ? fromCrypto.symbol : fromFiat.symbol} ≈ {
-                    mode === 'crypto' 
-                      ? (fromCrypto.price / toCrypto.price).toFixed(6)
-                      : (1 / toCrypto.price).toFixed(6)
-                  } {toCrypto.symbol}
+                  1 {mode === "crypto" ? fromCrypto.symbol : fromFiat.symbol} ≈{" "}
+                  {mode === "crypto"
+                    ? (fromCrypto.price / toCrypto.price).toFixed(6)
+                    : (1 / toCrypto.price).toFixed(6)}{" "}
+                  {toCrypto.symbol}
                 </span>
                 <RefreshCw className="w-4 h-4 cursor-pointer hover:text-primary transition-colors" />
               </div>
@@ -216,7 +227,7 @@ const CryptoCalculator: React.FC = () => {
 
             {/* Swap Button */}
             <Button className="w-full btn-primary-glow py-6 text-lg">
-              {mode === 'crypto' ? 'Swap Now' : 'Buy Crypto'}
+              {mode === "crypto" ? "Swap Now" : "Buy Crypto"}
             </Button>
           </div>
         </div>
