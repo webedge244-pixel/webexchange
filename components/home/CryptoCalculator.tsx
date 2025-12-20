@@ -144,7 +144,7 @@ const CryptoCalculator: React.FC = () => {
                       if (fiat) setFromFiat(fiat);
                     }
                   }}
-                  className="bg-muted border border-border rounded-lg px-4 py-3 font-medium input-glow focus:outline-none min-w-[120px]"
+                  className="bg-muted border border-border rounded-lg px-4 py-3 font-medium input-glow focus:outline-none min-w-30"
                 >
                   {mode === "crypto"
                     ? cryptoOptions.map((c) => (
@@ -199,7 +199,7 @@ const CryptoCalculator: React.FC = () => {
                     );
                     if (crypto) setToCrypto(crypto);
                   }}
-                  className="bg-muted border border-border rounded-lg px-4 py-3 font-medium input-glow focus:outline-none min-w-[120px]"
+                  className="bg-muted border border-border rounded-lg px-4 py-3 font-medium input-glow focus:outline-none min-w-30"
                 >
                   {cryptoOptions.map((c) => (
                     <option key={c.symbol} value={c.symbol}>
