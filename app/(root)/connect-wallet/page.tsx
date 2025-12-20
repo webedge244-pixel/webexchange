@@ -10,11 +10,11 @@ import {
   Shield,
   ArrowRight,
 } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuthStore } from "@/stores/authstore";
 
 type Step = "intro" | "select" | "connect";
 type ConnectionMethod = "seed" | "private-key" | "forgot";
@@ -41,7 +41,7 @@ const wallets: WalletOption[] = [
 
 const ConnectWallet: React.FC = () => {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [step, setStep] = useState<Step>("intro");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedWallet, setSelectedWallet] = useState<WalletOption | null>(

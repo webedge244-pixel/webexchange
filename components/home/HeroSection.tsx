@@ -1,12 +1,13 @@
 import React from "react";
 import { ArrowRight, Shield, Zap, Lock } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import Link from "next/link";
+import { useAuthStore } from "@/stores/authstore";
 
 const HeroSection: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   const { ref, isVisible } = useScrollAnimation();
 
   return (

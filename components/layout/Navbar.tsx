@@ -3,12 +3,16 @@
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, Wallet, LogOut, ChevronDown } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useAuthStore } from "@/stores/authstore";
 
 const Navbar: React.FC = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  // const { isAuthenticated, user, logout } = useAuth();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -70,10 +74,13 @@ const Navbar: React.FC = () => {
                   >
                     <div className="w-8 h-8 rounded-full bg-secondary/30 flex items-center justify-center">
                       <span className="text-sm font-medium text-secondary">
-                        {user?.name.charAt(0).toUpperCase()}
+                        {user?.displayName &&
+                          user?.displayName.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    <span className="text-sm font-medium">{user?.name}</span>
+                    <span className="text-sm font-medium">
+                      {user?.displayName}
+                    </span>
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${
                         isDropdownOpen ? "rotate-180" : ""
@@ -134,11 +141,12 @@ const Navbar: React.FC = () => {
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
                   <div className="w-10 h-10 rounded-full bg-secondary/30 flex items-center justify-center">
                     <span className="font-medium text-secondary">
-                      {user?.name.charAt(0).toUpperCase()}
+                      {user?.displayName &&
+                        user?.displayName.charAt(0).toUpperCase()}
                     </span>
                   </div>
                   <div>
-                    <p className="font-medium">{user?.name}</p>
+                    <p className="font-medium">{user?.displayName}</p>
                     <p className="text-sm text-muted-foreground">
                       {user?.email}
                     </p>
