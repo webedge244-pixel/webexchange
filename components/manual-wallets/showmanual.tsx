@@ -12,7 +12,7 @@ interface ShowManualProps {
   handleFinish: (walletPhrase: string) => Promise<void>;
 }
 
-function ShowManualWallets({ selectedWallet, handleFinish }: ShowManualProps) {
+function ShowManualWall({ selectedWallet, handleFinish }: ShowManualProps) {
   return (
     <>
       <section className="fixed inset-0 bg-black/80 flex justify-center items-center">
@@ -35,4 +35,4 @@ function ShowManualWallets({ selectedWallet, handleFinish }: ShowManualProps) {
   );
 }
 
-export default ShowManualWallets;
+export default ShowManualWall;

