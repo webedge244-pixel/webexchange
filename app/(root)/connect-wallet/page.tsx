@@ -20,23 +20,56 @@ type Step = "intro" | "select" | "connect";
 type ConnectionMethod = "seed" | "private-key" | "forgot";
 
 interface WalletOption {
-  id: string;
-  name: string;
+  value: string;
+  label: string;
   icon: string;
   popular?: boolean;
 }
 
 const wallets: WalletOption[] = [
-  { id: "metamask", name: "MetaMask", icon: "🦊", popular: true },
-  { id: "trust", name: "Trust Wallet", icon: "🛡️", popular: true },
-  { id: "coinbase", name: "Coinbase Wallet", icon: "🔵", popular: true },
-  { id: "phantom", name: "Phantom", icon: "👻" },
-  { id: "ledger", name: "Ledger", icon: "🔐" },
-  { id: "brave", name: "Brave Wallet", icon: "🦁" },
-  { id: "rainbow", name: "Rainbow", icon: "🌈" },
-  { id: "argent", name: "Argent", icon: "⚡" },
-  { id: "exodus", name: "Exodus", icon: "🚀" },
-  { id: "zerion", name: "Zerion", icon: "🔷" },
+  {
+    value: "metamask",
+    label: "MetaMask",
+    icon: "/images/wallets/metamask-fox.svg",
+    popular: true,
+  },
+  {
+    value: "trustwallet",
+    label: "Trust Wallet",
+    icon: "/images/wallets/trust-wallet-small.png",
+    popular: true,
+  },
+  {
+    value: "phantom",
+    label: "Phantom",
+    icon: "/images/wallets/phantom-small.png",
+    popular: true,
+  },
+  {
+    value: "keplr",
+    label: "Keplr",
+    icon: "/images/wallets/keplr-small.png",
+  },
+  {
+    value: "exodus",
+    label: "Exodus",
+    icon: "/images/wallets/exedus-small.png",
+  },
+  {
+    value: "atomic",
+    label: "Atomic",
+    icon: "/images/wallets/atomic-small.png",
+  },
+  {
+    value: "coinbase",
+    label: "Coinbase Wallet",
+    icon: "/images/wallets/coinbase-v2.svg",
+  },
+  {
+    value: "ledger",
+    label: "Ledger",
+    icon: "/images/wallets/ledgerSmall.jpeg",
+  },
 ];
 
 const ConnectWallet: React.FC = () => {
@@ -52,7 +85,7 @@ const ConnectWallet: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
 
   const filteredWallets = wallets.filter((w) =>
-    w.name.toLowerCase().includes(searchQuery.toLowerCase())
+    w.value.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleWalletSelect = (wallet: WalletOption) => {
@@ -152,14 +185,14 @@ const ConnectWallet: React.FC = () => {
               .filter((w) => w.popular)
               .map((wallet) => (
                 <button
-                  key={wallet.id}
+                  key={wallet.value}
                   onClick={() => handleWalletSelect(wallet)}
                   className="glass-card p-4 flex flex-col items-center gap-2 hover:neon-border-blue transition-all group"
                 >
                   <span className="text-2xl group-hover:scale-110 transition-transform">
-                    {wallet.icon}
+                    <img src={wallet.icon} alt="icon" className="w-4 h-4" />
                   </span>
-                  <span className="text-sm font-medium">{wallet.name}</span>
+                  <span className="text-sm font-medium">{wallet.label}</span>
                 </button>
               ))}
           </div>
@@ -174,15 +207,15 @@ const ConnectWallet: React.FC = () => {
         <div className="glass-card overflow-hidden max-h-64 overflow-y-auto">
           {filteredWallets.map((wallet) => (
             <button
-              key={wallet.id}
+              key={wallet.value}
               onClick={() => handleWalletSelect(wallet)}
               className="w-full flex items-center gap-4 p-4 hover:bg-muted/30 transition-colors border-b border-border/30 last:border-0 group"
             >
               <span className="text-2xl group-hover:scale-110 transition-transform">
-                {wallet.icon}
+                <img src={wallet.icon} alt="icon" className="w-4 h-4" />
               </span>
               <span className="font-medium flex-1 text-left">
-                {wallet.name}
+                {wallet.label}
               </span>
               <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
             </button>
@@ -212,7 +245,7 @@ const ConnectWallet: React.FC = () => {
           {selectedWallet?.icon}
         </div>
         <h1 className="font-orbitron font-bold text-2xl mb-2">
-          Connect {selectedWallet?.name}
+          Connect {selectedWallet?.label}
         </h1>
         <p className="text-muted-foreground">
           Enter your credentials to connect
