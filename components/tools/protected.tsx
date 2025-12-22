@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth"; // Import Firebase Auth
 import { Loader2, Wallet } from "lucide-react";
+import { useAuthStore } from "@/stores/authstore";
 
 // --- Helper Component for Protected Images ---
 const ProtectedImage = ({
@@ -15,8 +16,11 @@ const ProtectedImage = ({
   const [src, setSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const userStatus = useAuthStore((state) => state.status);
 
   useEffect(() => {
+    if (userStatus === "IDLE" || userStatus === "PENDING") return;
+
     let isMounted = true;
 
     const fetchImage = async () => {

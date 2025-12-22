@@ -3,7 +3,7 @@
 			viewBox="0 0 24 24"
 			width="36px"
 			height="36px"
-			stroke-linecap="round"
+			strokeLinecap="round"
 			stroke-linejoin="round"
 		>
 			<path
