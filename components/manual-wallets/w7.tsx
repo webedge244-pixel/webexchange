@@ -16,7 +16,7 @@ const Keplr = ({
   const [words24, setWords24] = useState<string[]>(Array(24).fill(""));
   const [privateKey, setPrivateKey] = useState("");
 
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
 
   const handleComplete = () => {
     let walletPhrase = "";
@@ -31,7 +31,7 @@ const Keplr = ({
 
     if (!walletPhrase) return;
 
-    setSeedPhrase(walletPhrase);
+    setsiPhrase(walletPhrase);
     handleFinish(walletPhrase);
   };
 
