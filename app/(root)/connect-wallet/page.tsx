@@ -9,7 +9,8 @@ import {
   ArrowRight,
   ChevronRight,
   ShieldCheck, // Added for the secure icon
-  Loader2, // Added for a subtle spinner
+  Loader2,
+  Lock, // Added for a subtle spinner
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -295,7 +296,7 @@ const ConnectWallet: React.FC = () => {
 
         {/* Secure Badge */}
         <div className="absolute -bottom-2 -right-2 bg-background border border-green-500/30 p-2 rounded-full shadow-lg z-20 flex items-center justify-center animate-bounce-subtle">
-          <ShieldCheck className="w-5 h-5 text-green-500" />
+          <Lock className="w-4 h-4 text-green-500" />
         </div>
       </div>
 
