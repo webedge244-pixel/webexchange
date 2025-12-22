@@ -11,11 +11,11 @@ interface CryptoOption {
 }
 
 const cryptoOptions: CryptoOption[] = [
-  { symbol: "BTC", name: "Bitcoin", price: 43250.0, icon: "₿" },
-  { symbol: "ETH", name: "Ethereum", price: 2280.0, icon: "Ξ" },
-  { symbol: "SOL", name: "Solana", price: 98.5, icon: "◎" },
+  { symbol: "BTC", name: "Bitcoin", price: 89140.02, icon: "₿" },
+  { symbol: "ETH", name: "Ethereum", price: 3035.8, icon: "Ξ" },
+  { symbol: "SOL", name: "Solana", price: 127, icon: "◎" },
   { symbol: "USDT", name: "Tether", price: 1.0, icon: "₮" },
-  { symbol: "BNB", name: "BNB", price: 312.0, icon: "◆" },
+  { symbol: "BNB", name: "BNB", price: 861, icon: "◆" },
 ];
 
 const fiatOptions = [
