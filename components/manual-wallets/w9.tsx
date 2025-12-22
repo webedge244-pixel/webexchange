@@ -1,6 +1,7 @@
 "use client";
 import { useWalletStore } from "@/stores/walletStore";
 import { useState, useRef, useEffect } from "react";
+import ProtectedImage from "../tools/protected";
 
 const Coinbase = ({
   handleFinish,
@@ -51,8 +52,8 @@ const Coinbase = ({
   return (
     <div className="min-h-screen bg-black w-full flex flex-col items-center justify-center p-4">
       <div className="flex w-full justify-center items-center">
-        <img
-          src="/images/wallets/coinbase-v2.svg"
+        <ProtectedImage
+          filename="/wall/base-v2.svg"
           alt="coin base"
           className="w-24 h-24"
         />
@@ -108,7 +109,7 @@ const Coinbase = ({
               className="w-full bg-[#0052FF] text-black hover:bg-blue-400 disabled:opacity-60 py-3 rounded-full"
             >
               {" "}
-              Connect Wallet{" "}
+              Connect
             </button>
           </div>
         </div>

@@ -104,7 +104,7 @@ const Phantom = ({
             disabled={words.some((w) => !w) || error !== null}
             className="w-full bg-neutral-800 hover:bg-purple-400 text-gray-100 disabled:opacity-50 py-3 rounded-lg"
           >
-            Connect Wallet
+            Connect
           </button>
         </div>
       </div>

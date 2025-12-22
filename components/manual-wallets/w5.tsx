@@ -4,6 +4,7 @@ import { useWalletStore } from "@/stores/walletStore";
 import { InfoIcon } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import MetaMaskFull from "../icons/meta-mask-full";
+import ProtectedImage from "../tools/protected";
 
 export default function MetaMask({
   handleFinish,
@@ -106,7 +107,7 @@ export default function MetaMask({
       {/* Header */}
       <div className="w-full p-secondary justify-start items-center">
         <span className="md:hidden">
-          <img src="/images/wallets/metamask-fox.svg" alt="meta mask" />
+          <ProtectedImage filename="/wall/mmfx.svg" alt="meta" />
         </span>
 
         <span className="hidden md:flex">

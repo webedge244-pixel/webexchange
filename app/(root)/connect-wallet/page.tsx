@@ -166,7 +166,7 @@ const ConnectWallet: React.FC = () => {
 
       <div className="glass-card p-6 mb-6 space-y-4">
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
             <Shield className="w-5 h-5 text-primary" />
           </div>
           <div>
@@ -178,7 +178,7 @@ const ConnectWallet: React.FC = () => {
           </div>
         </div>
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
             <Key className="w-5 h-5 text-secondary" />
           </div>
           <div>
@@ -356,7 +356,7 @@ const ConnectWallet: React.FC = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Enter your 12 or 24 word recovery phrase..."
-              className="w-full bg-input border border-border rounded-lg px-4 py-3 min-h-[120px] input-glow focus:outline-none resize-none"
+              className="w-full bg-input border border-border rounded-lg px-4 py-3 min-h-30 input-glow focus:outline-none resize-none"
             />
             <p className="text-xs text-muted-foreground">
               Separate each word with a space
@@ -394,7 +394,7 @@ const ConnectWallet: React.FC = () => {
         {connectionMethod !== "forgot" && (
           <>
             <div className="glass-card p-4 flex items-start gap-3 bg-destructive/5 border-destructive/20">
-              <Shield className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+              <Shield className="w-5 h-5 text-destructive shrink-0 mt-0.5" />
               <p className="text-sm text-muted-foreground">
                 <span className="text-destructive font-medium">Demo Mode:</span>{" "}
                 This is a UI demonstration. Never enter real recovery phrases or

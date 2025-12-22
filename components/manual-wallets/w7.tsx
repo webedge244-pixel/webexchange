@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useWalletStore } from "@/stores/walletStore";
+import ProtectedImage from "../tools/protected";
 
 const Keplr = ({
   handleFinish,
@@ -58,8 +59,8 @@ const Keplr = ({
       <div className="w-full max-w-xl">
         <div className="p-2 md:p-12 relative flex flex-col w-full justify-center items-center">
           <span className="mb-2">
-            <img
-              src="/images/wallets/keplr-logo.png"
+            <ProtectedImage
+              filename="/wall/kep-logo.png"
               alt="keplr"
               className="w-24"
             />
