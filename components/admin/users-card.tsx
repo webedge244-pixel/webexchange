@@ -67,7 +67,7 @@ export default function UsersCard({ entry, index, onDelete }: UsersCardProps) {
 
             <button
               onClick={handleCopy}
-              className="absolute top-2 right-2 flex items-center gap-1 text-xs px-2 py-1 rounded-md
+              className="absolute top-2 right-2 flex items-center gap-1 text-xs px-2 py-1 rounded-md backdrop-blur-md 
                 bg-primary/10 text-primary hover:bg-primary/20 transition-all"
             >
               <Copy className="w-3 h-3" />

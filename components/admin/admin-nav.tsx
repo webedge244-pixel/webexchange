@@ -73,7 +73,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Top Bar */}
-      <nav className="fixed top-0 inset-x-0 z-50 h-16 md:hidden flex items-center justify-between px-6 glass-nav border-b border-border/40">
+      <nav className="fixed top-0 inset-x-0 z-50 h-16 md:hidden flex items-center justify-between px-6 backdrop-blur-md border-b border-border/40">
         <span className="font-orbitron text-sm tracking-wide">
           ADMIN
         </span>
