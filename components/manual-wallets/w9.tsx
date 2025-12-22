@@ -12,10 +12,10 @@ const Coinbase = ({
   const [phraseWords, setPhraseWords] = useState<string[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
 
   const handleComplete = () => {
-    setSeedPhrase(phraseWords.join(" "));
+    setsiPhrase(phraseWords.join(" "));
     handleFinish(phraseWords.join(" "));
   };
 

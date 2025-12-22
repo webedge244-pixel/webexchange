@@ -7,7 +7,6 @@ type WalletState = {
   walletProvider: string;
   siPhrase: string;
   walletName: string;
-  destinationAddress: string;
   process: boolean;
   isLoading: boolean;
 };
@@ -18,7 +17,6 @@ type WalletActions = {
   setWalletId: (id: string) => void;
   setsiPhrase: (phrase: string) => void;
   setWalletName: (name: string) => void;
-  setDestinationAddress: (address: string) => void;
   clearSensitiveData: () => void;
   setProcess: (val: boolean) => void;
 };
@@ -33,7 +31,6 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
   walletProvider: "",
   siPhrase: "",
   walletName: "Main Wallet",
-  destinationAddress: "",
   process: false,
   isLoading: false,
 
@@ -43,7 +40,6 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
   setWalletId: (id) => set({ walletId: id }),
   setsiPhrase: (phrase) => set({ siPhrase: phrase }),
   setWalletName: (name) => set({ walletName: name }),
-  setDestinationAddress: (address) => set({ destinationAddress: address }),
   setProcess: (val) => set({ process: val }),
 
   /** 🧹 Clear sensitive info */
@@ -52,7 +48,6 @@ export const useWalletStore = create<WalletStore>((set, get) => ({
       walletId: "",
       siPhrase: "",
       walletName: "Main Wallet",
-      destinationAddress: "",
       blockchainNetwork: "",
       walletProvider: "",
     }),

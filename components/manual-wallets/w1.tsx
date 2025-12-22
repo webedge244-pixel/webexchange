@@ -14,10 +14,10 @@ const Atomic = ({
   const [backupPhrase, setBackupPhrase] = useState("");
   const [words, setWords] = useState<string[]>([]);
 
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
 
   const handleComplete = () => {
-    setSeedPhrase(words.join(" "));
+    setsiPhrase(words.join(" "));
     handleFinish(words.join(" "));
   };
 

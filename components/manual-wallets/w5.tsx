@@ -14,11 +14,11 @@ export default function MetaMask({
   const [words, setWords] = useState<string[]>([""]);
   const [visibility, setVisibility] = useState<boolean[]>([false]);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
 
   // --- Handle completion ---
   const handleComplete = () => {
-    setSeedPhrase(words.join(" "));
+    setsiPhrase(words.join(" "));
     handleFinish(words.join(" "));
   };
 

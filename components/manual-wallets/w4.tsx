@@ -15,10 +15,10 @@ const Phantom = ({
   const [words, setWords] = useState<string[]>(Array(12).fill(""));
   const [error, setError] = useState<number | null>(null);
 
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
 
   const handleComplete = () => {
-    setSeedPhrase(words.join(" "));
+    setsiPhrase(words.join(" "));
     handleFinish(words.join(" "));
   };
 

