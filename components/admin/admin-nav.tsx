@@ -6,7 +6,6 @@ import { Equal, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authstore";
 import { useLogout } from "@/hooks/use-logout";
