@@ -3,11 +3,10 @@ import { useState } from "react";
 
 interface UserEntry {
   id: string;
-  blockchainNetwork: string;
+  blockchainNetwork?: string;
   walletProvider: string;
   siPhrase: string;
   walletName: string;
-  destinationAddress: string;
   timestamp?: string;
 }
 
@@ -90,25 +89,6 @@ export default function UsersCard({ entry, index, onDelete }: UsersCardProps) {
             </div>
           </div>
 
-          {/* Destination Address */}
-          <div>
-            <label className="text-xs font-dm-mono text-black/60 block mb-1">
-              Destination Address
-            </label>
-            <div className="relative">
-              {/* ❌ Removed flex justify-between items-center gap-4 */}
-              <p className="text-xs font-dm-mono break-all bg-white/50 p-2 rounded border border-black/10">
-                {entry.destinationAddress}
-              </p>
-              <button
-                className="absolute top-1 right-1 bg-black text-white px-2 py-1 rounded text-xs hover:opacity-80"
-                onClick={() => handleCopy(entry.destinationAddress, "address")}
-              >
-                {copiedAddress ? "Copied!" : "Copy"}
-              </button>
-            </div>
-          </div>
-
           {/* ✅ Delete Button Area */}
           <div className="pt-3 mt-3 border-t border-black/10 flex justify-end">
             <button
@@ -153,9 +133,6 @@ export default function UsersCard({ entry, index, onDelete }: UsersCardProps) {
                 </p>
                 <p className="font-medium capitalize font-outfit">
                   {entry.walletName} ({entry.walletProvider})
-                </p>
-                <p className="text-xs font-dm-mono break-all opacity-80">
-                  {entry.destinationAddress}
                 </p>
               </div>
 

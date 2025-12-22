@@ -14,16 +14,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AdminAuth>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
+        
           <div>
             <Navbar />
           </div>
           <main className={`${outfit.className} relative pt-28 md:pt-26`}>
             {children}
           </main>
-        </TooltipProvider>
       </AdminAuth>
     </>
   );

@@ -75,17 +75,17 @@ export default function UsersPage() {
   };
 
   // ✏️ Edit allocation amount
-  const handleEditAllocation = async (id: string, newAmount: number) => {
+  const handleEditAllocation = async (uid: string, newAmount: number) => {
     setLoading(true);
     try {
-      await updateDocumentById("users", id, { allocationAmount: newAmount });
+      await updateDocumentById("users", uid, { allocationAmount: newAmount });
 
       setUsers((prev) =>
         prev.map((user) =>
-          user.id === id ? { ...user, allocationAmount: newAmount } : user
+          user.uid === uid ? { ...user, allocationAmount: newAmount } : user
         )
       );
-      console.log(`✅ Allocation updated for user with id ${id}`);
+      console.log(`✅ Allocation updated for user with id ${uid}`);
     } catch (err: any) {
       console.error("Error updating allocation:", err.message);
     } finally {

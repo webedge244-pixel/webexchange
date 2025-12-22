@@ -4,18 +4,16 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 
 interface UserData {
-  id: string;
-  cardanoBalance: number;
-  allocationAmount: number;
-  blockchainNetwork: string;
-  walletProvider: string;
-  destinationAddress: string;
+  uid: string;
+  email: string;
+  name: string;
+  role: 'user' | 'admin';
 }
 
 interface UserDataCardProps {
   entry: UserData;
   index: number;
-  onEdit: (id: string, newAmount: number) => Promise<void>;
+  onEdit: (id: string, updatedData: Partial<UserData>) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
 }
 
@@ -27,17 +25,17 @@ export default function UserDataCard({
 }: UserDataCardProps) {
   const isEven = index % 2 === 0;
   const [editing, setEditing] = useState(false);
-  const [newAllocation, setNewAllocation] = useState(entry.allocationAmount);
+  const [newRole, setNewRole] = useState<UserData['role']>(entry.role);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  // ✅ Handle Save Edit
-  const handleSave = () => {
-    onEdit(entry.id, newAllocation);
+  // Handle Save Edit (updating the role)
+  const handleSave = async () => {
+    await onEdit(entry.uid, { role: newRole });
     setEditing(false);
   };
 
   const handleConfirmDelete = () => {
-    onDelete(entry.id);
+    onDelete(entry.uid);
     setShowDeleteConfirm(false);
   };
 
@@ -52,40 +50,42 @@ export default function UserDataCard({
         }`}
       >
         <div className="space-y-3">
-          {/* Header */}
+          {/* Header: Name and Email */}
           <div className="border-b border-black/20 pb-2">
-            <h3 className="font-outfit font-semibold text-lg capitalize">
-              {entry.walletProvider}
+            <h3 className="font-outfit font-semibold text-lg">
+              {entry.name}
             </h3>
             <p className="text-xs text-black/60 font-dm-mono">
-              {entry.blockchainNetwork}
+              {entry.email}
             </p>
           </div>
 
-          {/* ✅ Cardano Balance */}
-          <div className="bg-green-50 border border-green-300 rounded p-3">
+          {/* User ID Section */}
+          <div className="bg-neutral-50 border border-neutral-300 rounded p-3">
             <label className="text-xs font-dm-mono text-black/60 block mb-1">
-              Cardano Balance
+              User ID (UID)
             </label>
-            <p className="text-lg font-bold font-dm-mono text-green-700">
-              {entry.cardanoBalance.toLocaleString()}
+            <p className="text-xs font-dm-mono break-all">
+              {entry.uid}
             </p>
           </div>
 
-          {/* ✅ Allocation Amount (Editable) */}
-          <div className="bg-blue-50 border border-blue-300 rounded p-3">
+          {/* Role Section (Editable) */}
+          <div className={`${entry.role === 'admin' ? 'bg-purple-50 border-purple-300' : 'bg-blue-50 border-blue-300'} border rounded p-3`}>
             <label className="text-xs font-dm-mono text-black/60 block mb-1">
-              Allocation Amount
+              Account Role
             </label>
 
             {editing ? (
               <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  value={newAllocation}
-                  onChange={(e) => setNewAllocation(Number(e.target.value))}
-                  className="border border-black/20 rounded px-2 py-1 text-sm w-28"
-                />
+                <select
+                  value={newRole}
+                  onChange={(e) => setNewRole(e.target.value as UserData['role'])}
+                  className="border border-black/20 rounded px-2 py-1 text-sm bg-white"
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
                 <button
                   onClick={handleSave}
                   className="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition"
@@ -95,7 +95,7 @@ export default function UserDataCard({
                 <button
                   onClick={() => {
                     setEditing(false);
-                    setNewAllocation(entry.allocationAmount);
+                    setNewRole(entry.role);
                   }}
                   className="bg-neutral-300 text-black px-3 py-1 rounded text-sm hover:bg-neutral-400 transition"
                 >
@@ -104,42 +104,32 @@ export default function UserDataCard({
               </div>
             ) : (
               <div className="flex items-center justify-between">
-                <p className="text-base font-dm-mono">
-                  ₳ {entry.allocationAmount.toLocaleString()}
+                <p className={`text-sm font-bold uppercase tracking-wider ${entry.role === 'admin' ? 'text-purple-700' : 'text-blue-700'}`}>
+                  {entry.role}
                 </p>
                 <button
                   onClick={() => setEditing(true)}
-                  className="text-xs bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                  className="text-xs bg-black text-white px-3 py-1 rounded hover:bg-neutral-800 transition"
                 >
-                  Edit
+                  Change Role
                 </button>
               </div>
             )}
           </div>
 
-          {/* ✅ Destination Address (Main Focus) */}
-          <div>
-            <label className="text-xs font-dm-mono text-black/60 block mb-1">
-              Destination Address
-            </label>
-            <p className="text-xs font-dm-mono break-all bg-white/50 p-2 rounded border border-black/10">
-              {entry.destinationAddress}
-            </p>
-          </div>
-
-          {/* ✅ Delete Button */}
+          {/* Delete Button */}
           <div className="pt-3 mt-3 border-t border-black/10 flex justify-end">
             <button
               onClick={() => setShowDeleteConfirm(true)}
               className="bg-red-600 text-white px-3 py-1 rounded text-sm font-medium hover:bg-red-700 transition-colors"
             >
-              Delete
+              Delete User
             </button>
           </div>
         </div>
       </motion.div>
 
-      {/* ✅ Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal */}
       <AnimatePresence>
         {showDeleteConfirm && (
           <motion.div
@@ -156,19 +146,15 @@ export default function UserDataCard({
               className="bg-white rounded-sm border border-black p-6 w-full max-w-md space-y-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <h4 className="font-outfit font-semibold text-xl">
+              <h4 className="font-outfit font-semibold text-xl text-red-600">
                 Confirm Deletion
               </h4>
               <p className="text-sm text-black/80">
-                Are you sure you want to delete this user entry?
+                Are you sure you want to delete this user? This action cannot be undone.
               </p>
               <div className="bg-neutral-100 p-3 rounded border border-black/10">
-                <p className="font-dm-mono text-xs text-black/60">
-                  Destination Address:
-                </p>
-                <p className="text-xs font-dm-mono break-all">
-                  {entry.destinationAddress}
-                </p>
+                <p className="font-semibold text-sm">{entry.name}</p>
+                <p className="font-dm-mono text-xs text-black/60">{entry.email}</p>
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-black/10">
@@ -182,7 +168,7 @@ export default function UserDataCard({
                   onClick={handleConfirmDelete}
                   className="bg-red-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-red-700 transition-colors"
                 >
-                  Delete
+                  Confirm Delete
                 </button>
               </div>
             </motion.div>

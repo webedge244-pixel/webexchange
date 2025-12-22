@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/firebase"; // your firebase config
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import {  signOut, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/stores/authstore";
+
 
 const navLinks = [
 	{ href: "/admin", label: "Dashboard" },
@@ -18,15 +20,9 @@ const navLinks = [
 
 export default function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [user, setUser] = useState<User | null>(null);
 	const router = useRouter();
-	// Listen for auth state changes
-	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			setUser(currentUser);
-		});
-		return unsubscribe;
-	}, []);
+	const user = useAuthStore((state) => state.user);
+	
 
 	const handleSignOut = async () => {
 		await signOut(auth);
