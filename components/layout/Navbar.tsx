@@ -6,11 +6,12 @@ import { Menu, X, Wallet, LogOut, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useAuthStore } from "@/stores/authstore";
+import { useLogout } from "@/hooks/use-logout";
 
 const Navbar: React.FC = () => {
   // const { isAuthenticated, user, logout } = useAuth();
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
+  const { logout, isLoggingOut } = useLogout();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const [isScrolled, setIsScrolled] = useState(false);

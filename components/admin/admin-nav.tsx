@@ -7,10 +7,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/firebase";
-import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/authstore";
-
+import { useLogout } from "@/hooks/use-logout";
 const navLinks = [
   { href: "/admin", label: "Dashboard" },
   { href: "/admin/users", label: "Users" },
@@ -21,9 +20,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
-
+const { logout, isLoggingOut } = useLogout();
   const handleSignOut = async () => {
-    await signOut(auth);
+    await logout();
     router.push("/");
     setIsOpen(false);
   };
