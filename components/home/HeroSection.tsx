@@ -48,7 +48,7 @@ const HeroSection: React.FC = () => {
             }`}
           >
             The Future of{" "}
-            <span className="text-primary text-glow-blue">Crypto</span> Exchange
+            <span className="text-primary text-glow-blue">Crypto</span> Assets
           </h1>
 
           {/* Subtext */}
@@ -59,7 +59,7 @@ const HeroSection: React.FC = () => {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            Trade, swap, and manage your digital assets with industry-leading
+           The easiest way to to Secure, Trade, swap, and manage your digital assets with industry-leading
             security and lightning-fast transactions. Built for the next
             generation of traders.
           </p>
