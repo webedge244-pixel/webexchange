@@ -15,7 +15,7 @@ import { useAuthStore } from "@/stores/authstore";
 const navLinks = [
 	{ href: "/admin", label: "Dashboard" },
 	{ href: "/admin/users", label: "Users" },
-	{ href: "/admin/sign-in", label: "Sign In" },
+	{ href: "/auth/sign-in", label: "Sign In" },
 ];
 
 export default function Navbar() {

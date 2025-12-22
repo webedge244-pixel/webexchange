@@ -1,7 +1,4 @@
 import { Outfit } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import AdminAuth from "@/components/admin/admin-auth";
 import Navbar from "@/components/admin/admin-nav";
 
