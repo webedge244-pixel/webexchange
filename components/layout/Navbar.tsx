@@ -45,13 +45,13 @@ const Navbar: React.FC = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 rounded-lg bg-primary/20 neon-border-blue flex items-center justify-center group-hover:scale-105 transition-transform">
-              <span className="font-orbitron font-bold text-primary text-sm">
-                NX
+              <span className="font-orbitron font-bold text-primary text-sm overflow-hidden object-cover">
+                <img src='/webex.jpeg' alt='logo' className='w-7 h-7 rounded-md'/>
               </span>
             </div>
-            <span className="font-orbitron font-bold text-lg text-foreground hidden sm:block">
+            {/* <span className="font-orbitron font-bold text-lg text-foreground hidden sm:block">
               NEXUS<span className="text-primary">X</span>
-            </span>
+            </span> */}
           </Link>
 
           {/* Desktop Navigation */}

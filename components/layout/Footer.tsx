@@ -10,13 +10,13 @@ const Footer: React.FC = () => {
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-lg bg-primary/20 neon-border-blue flex items-center justify-center">
-                <span className="font-orbitron font-bold text-primary text-sm">
-                  NX
-                </span>
-              </div>
-              <span className="font-orbitron font-bold text-lg">
-                NEXUS<span className="text-primary">X</span>
+                <span className="font-orbitron font-bold text-primary text-sm overflow-hidden object-cover">
+                <img src='/webex.jpeg' alt='logo' className='w-7 h-7 rounded-md'/>
               </span>
+              </div>
+              {/* <span className="font-orbitron font-bold text-lg">
+                NEXUS<span className="text-primary">X</span>
+              </span> */}
             </Link>
             <p className="text-sm text-muted-foreground">
               The future of decentralized exchange. Trade with confidence.
