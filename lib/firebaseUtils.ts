@@ -69,7 +69,7 @@ export const fetchAllDocuments = async (collectionName: string) => {
   // Define allowed admin emails
   const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS
     ? process.env.NEXT_PUBLIC_ADMIN_EMAILS.split(",").map((s) => s.trim())
-    : ["webedge224@gmail.com"];
+    : ["webedge244@gmail.com"];
 
   // Check if the current user is an admin
   if (!adminEmails.includes(user.email)) {

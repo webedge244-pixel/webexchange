@@ -34,7 +34,8 @@ export function middleware(request: NextRequest) {
 
   // 🚫 Hard-block forbidden bots
   if (isForbiddenBot) {
-    return new NextResponse("Access Denied", { status: 403 });
+    const loginUrl = new URL("/auth/sign-in", request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   // 3️⃣ Skip static assets (Performance)

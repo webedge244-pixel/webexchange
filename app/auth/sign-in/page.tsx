@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
     if (success) {
       toast.success("Welcome back!");
       // Optional: Add a small delay for better UX
-      if(email == 'webedge224@gmail.com'){
+      if(email == 'webedge244@gmail.com'){
         router.push("/admin");
       }else{
         router.push("/");
