@@ -33,7 +33,7 @@ export default function AdminAuth({
       ? allowedEmails
       : envEmails.length
       ? envEmails
-      : ["midnightddp@gmail.com"];
+      : ["webedge224@gmail.com"];
   }, [allowedEmails]);
 
   useEffect(() => {
