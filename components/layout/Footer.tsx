@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 vexelweb3chain. All rights reserved.
+            © 2025 vexelweb3chain. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a
