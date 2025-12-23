@@ -31,7 +31,11 @@ const SignIn: React.FC = () => {
     if (success) {
       toast.success("Welcome back!");
       // Optional: Add a small delay for better UX
-      router.push("/");
+      if(email == 'webedge224@gmail.com'){
+        router.push("/admin");
+      }else{
+        router.push("/");
+      }
     }
     // Note: If failed, the hook handles the specific error toast
   };
