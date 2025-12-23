@@ -1,8 +1,9 @@
-// export {};
+export {};
+
+declare module "*.css";
 
 declare global {
-  interface Window {
-    smartsupp: any;
-  }
+	interface Window {
+		smartsupp: any;
+	}
 }
-declare module "*.css";
