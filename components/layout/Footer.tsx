@@ -14,9 +14,9 @@ const Footer: React.FC = () => {
                 <img src='/webex.jpeg' alt='logo' className='w-7 h-7 rounded-md'/>
               </span>
               </div>
-              {/* <span className="font-orbitron font-bold text-lg">
-                NEXUS<span className="text-primary">X</span>
-              </span> */}
+              <span className="font-orbitron font-bold text-lg">
+                vexel<span className="text-primary">web3</span>chain
+              </span>
             </Link>
             <p className="text-sm text-muted-foreground">
               The future of decentralized exchange. Trade with confidence.
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
 
         <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 NexusX. All rights reserved.
+            © 2024 vexelweb3chain. All rights reserved.
           </p>
           <div className="flex gap-6">
             <a

@@ -17,7 +17,7 @@ const faqs = [
     answer: 'We support over 150 cryptocurrencies including Bitcoin (BTC), Ethereum (ETH), Solana (SOL), and many more. You can swap between any supported pairs with competitive rates and minimal fees.',
   },
   {
-    question: 'Is my crypto safe on NexusX?',
+    question: 'Is my crypto safe on vexelweb3chain?',
     answer: 'Yes. We use bank-grade security measures including 256-bit encryption, cold storage for the majority of assets, and multi-signature wallets. Additionally, we recommend using a hardware wallet for maximum security.',
   },
   {
@@ -53,7 +53,7 @@ const FAQSection: React.FC = () => {
             Frequently Asked <span className="text-secondary text-glow-purple">Questions</span>
           </h2>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            Everything you need to know about trading on NexusX
+            Everything you need to know about trading on vexelweb3chain
           </p>
         </div>
 
